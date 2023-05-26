@@ -22,9 +22,6 @@ export class AuthSignUpComponent implements OnInit {
    signUpForm: UntypedFormGroup;
    showAlert: boolean = false;
 
-   /**
-    * Constructor
-    */
    constructor(
       private _authService: AuthService,
       private _formBuilder: UntypedFormBuilder,

@@ -20,15 +20,12 @@ import { MatTooltipModule } from '@angular/material/tooltip';
     imports: [
         RouterModule.forChild(authSignupRoutes),
         MatButtonModule,
-        MatCheckboxModule,
         MatFormFieldModule,
         MatIconModule,
         MatInputModule,
         MatProgressSpinnerModule,
-        FuseCardModule,
         FuseAlertModule,
         SharedModule,
-        MatTooltipModule
     ]
 })
 export class AuthSignUpModule
