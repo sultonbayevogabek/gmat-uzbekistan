@@ -11,12 +11,13 @@ import { FuseAlertModule } from '@fuse/components/alert';
 import { SharedModule } from 'app/shared/shared.module';
 import { AuthSignUpComponent } from 'app/modules/auth/sign-up/sign-up.component';
 import { authSignupRoutes } from 'app/modules/auth/sign-up/sign-up.routing';
+import { MatTooltipModule } from '@angular/material/tooltip';
 
 @NgModule({
     declarations: [
         AuthSignUpComponent
     ],
-    imports     : [
+    imports: [
         RouterModule.forChild(authSignupRoutes),
         MatButtonModule,
         MatCheckboxModule,
@@ -26,7 +27,8 @@ import { authSignupRoutes } from 'app/modules/auth/sign-up/sign-up.routing';
         MatProgressSpinnerModule,
         FuseCardModule,
         FuseAlertModule,
-        SharedModule
+        SharedModule,
+        MatTooltipModule
     ]
 })
 export class AuthSignUpModule

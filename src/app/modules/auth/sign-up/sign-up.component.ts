@@ -34,10 +34,9 @@ export class AuthSignUpComponent implements OnInit {
 
    ngOnInit(): void {
       this.signUpForm = this._formBuilder.group({
-            firstName: ['', [Validators.required, Validators.minLength(3)]],
-            lastName: ['', Validators.required],
+            name: ['', [Validators.required, Validators.minLength(3)]],
             phone: ['', Validators.required],
-            password: ['', Validators.required]
+            password: ['', [Validators.required, Validators.minLength(6)]]
          }
       );
    }

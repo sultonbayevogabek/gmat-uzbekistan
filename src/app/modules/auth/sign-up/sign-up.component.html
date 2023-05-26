@@ -1,18 +1,12 @@
 <div class="flex flex-col sm:flex-row items-center md:items-start sm:justify-center md:justify-start flex-auto min-w-0">
     <div class="md:flex md:items-center md:justify-end w-full sm:w-auto md:h-full md:w-1/2 py-8 px-4 sm:p-12 md:p-16 sm:rounded-2xl md:rounded-none sm:shadow md:shadow-none sm:bg-card">
         <div class="w-full max-w-80 sm:w-80 mx-auto sm:mx-0">
-            <!-- Logo -->
-            <div class="w-12">
-                <img src="assets/images/logo/logo.svg" alt="">
-            </div>
-
             <!-- Title -->
             <div class="mt-8 text-4xl font-extrabold tracking-tight leading-tight">Ro'yxatdan o'tish</div>
             <div class="flex items-baseline mt-0.5 font-medium">
                 <div>Oldin ro'yxatdan o'tganmisiz?</div>
-                <a
-                        class="ml-1 text-primary-500 hover:underline"
-                        [routerLink]="['/sign-in']">Kirish
+                <a class="ml-1 text-primary-500 hover:underline"
+                   [routerLink]="['/sign-in']">Kirish
                 </a>
             </div>
 
@@ -24,40 +18,37 @@
                     [showIcon]="false"
                     [type]="alert.type"
                     [@shake]="alert.type === 'error'">
-                {{alert.message}}
+                {{ alert.message }}
             </fuse-alert>
 
-            <!-- Sign Up form -->
             <form class="mt-8" [formGroup]="signUpForm" #signUpNgForm="ngForm">
                 <mat-form-field class="w-full">
                     <mat-label>Ism</mat-label>
                     <input
-                            id="firstName"
+                            id="name"
                             matInput
-                            [formControlName]="'firstName'"
+                            [formControlName]="'name'"
                     >
-                    <mat-error *ngIf="signUpForm.get('firstName').hasError('required') || signUpForm.get('firstName').hasError('minLength')">
+                    <mat-error
+                            *ngIf="signUpForm.get('name').hasError('required') || signUpForm.get('name').hasError('minLength')">
                         Ismingizni kiriting
                     </mat-error>
                 </mat-form-field>
 
                 <mat-form-field class="w-full">
-                    <mat-label>Email address</mat-label>
+                    <mat-label>Telefon raqam</mat-label>
                     <input
-                            id="email"
+                            id="phone"
                             matInput
-                            [formControlName]="'email'">
-                    <mat-error *ngIf="signUpForm.get('email').hasError('required')">
-                        Email address is required
-                    </mat-error>
-                    <mat-error *ngIf="signUpForm.get('email').hasError('email')">
-                        Please enter a valid email address
+                            [formControlName]="'phone'">
+                    <mat-error *ngIf="signUpForm.get('phone').hasError('required')">
+                        Telefon raqamingizni kiriting
                     </mat-error>
                 </mat-form-field>
 
                 <!-- Password field -->
                 <mat-form-field class="w-full">
-                    <mat-label>Password</mat-label>
+                    <mat-label>Parol</mat-label>
                     <input
                             id="password"
                             matInput
@@ -78,37 +69,11 @@
                                 *ngIf="passwordField.type === 'text'"
                                 [svgIcon]="'heroicons_solid:eye-off'"></mat-icon>
                     </button>
-                    <mat-error>
-                        Password is required
+                    <mat-error
+                            *ngIf="signUpForm.get('password').hasError('required') || signUpForm.get('password').hasError('minLength')">
+                        Parolni kiriting
                     </mat-error>
                 </mat-form-field>
-
-                <!-- Company field -->
-                <mat-form-field class="w-full">
-                    <mat-label>Company</mat-label>
-                    <input
-                            id="company-confirm"
-                            matInput
-                            [formControlName]="'company'">
-                </mat-form-field>
-
-                <!-- ToS and PP -->
-                <div class="inline-flex items-end w-full mt-1.5">
-                    <mat-checkbox
-                            [color]="'primary'"
-                            [formControlName]="'agreements'">
-                        <span>I agree to the</span>
-                        <a
-                                class="ml-1 text-primary-500 hover:underline"
-                                [routerLink]="['./']">Terms of Service
-                        </a>
-                        <span>and</span>
-                        <a
-                                class="ml-1 text-primary-500 hover:underline"
-                                [routerLink]="['./']">Privacy Policy
-                        </a>
-                    </mat-checkbox>
-                </div>
 
                 <!-- Submit button -->
                 <button
@@ -118,7 +83,7 @@
                         [disabled]="signUpForm.disabled"
                         (click)="signUp()">
                     <span *ngIf="!signUpForm.disabled">
-                        Create your free account
+                        Ro'yxatdan o'tish
                     </span>
                     <mat-progress-spinner
                             *ngIf="signUpForm.disabled"
@@ -126,6 +91,23 @@
                             [mode]="'indeterminate'"></mat-progress-spinner>
                 </button>
 
+                <div class="flex items-center mt-8">
+                    <div class="flex-auto mt-px border-t"></div>
+                    <div class="mx-2 text-secondary">Google orqali</div>
+                    <div class="flex-auto mt-px border-t"></div>
+                </div>
+
+                <button
+                        class="w-full mt-8 text-secondary"
+                        type="button"
+                        mat-stroked-button
+                        matTooltip="Google orqali ro'yxatdan o'tish"
+                >
+                    <mat-icon
+                            class="icon-size-5 mr-2"
+                            [svgIcon]="'heroicons_solid:google'"></mat-icon>
+                    <span>Google</span>
+                </button>
             </form>
         </div>
     </div>
@@ -153,12 +135,12 @@
         <!-- Content -->
         <div class="z-10 relative w-full max-w-2xl">
             <div class="text-7xl font-bold leading-none text-gray-100">
-                <div>Welcome to</div>
-                <div>our community</div>
+                <div>"GMAT Uzbekistan" ga</div>
+                <div>xush kelibsiz</div>
             </div>
             <div class="mt-6 text-lg tracking-tight leading-6 text-gray-400">
-                Fuse helps developers to build organized and well coded dashboards full of beautiful and rich modules.
-                Join us and start building your application today.
+                Biz bilan GMAT imtihoniga onlayn va qulay tayyorgarlik ko'ring. Imtihonda yuqori ball olib, oylikni 50%
+                ga oshiring
             </div>
             <div class="flex items-center mt-8">
                 <div class="flex flex-0 items-center -space-x-1.5">
@@ -175,8 +157,8 @@
                             class="flex-0 w-10 h-10 rounded-full ring-4 ring-offset-1 ring-gray-800 ring-offset-gray-800 object-cover"
                             src="assets/images/avatars/male-16.jpg">
                 </div>
-                <div class="ml-4 font-medium tracking-tight text-gray-400">More than 17k people joined us, it's your
-                    turn
+                <div class="ml-4 font-medium tracking-tight text-gray-400">
+                    100 dan ortiq o'qituvchilar biz bilan GMAT imtihonidan yuqori ball bilan o'tishdi
                 </div>
             </div>
         </div>
