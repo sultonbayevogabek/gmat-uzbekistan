@@ -26,6 +26,7 @@ import { MatTooltipModule } from '@angular/material/tooltip';
         MatProgressSpinnerModule,
         FuseAlertModule,
         SharedModule,
+        MatCheckboxModule,
     ]
 })
 export class AuthSignUpModule
