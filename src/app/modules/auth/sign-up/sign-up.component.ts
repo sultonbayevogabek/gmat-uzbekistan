@@ -15,10 +15,7 @@ import { AuthService } from 'app/core/auth/auth.service';
 export class AuthSignUpComponent implements OnInit {
    @ViewChild('signUpNgForm') signUpNgForm: NgForm;
 
-   alert: { type: FuseAlertType; message: string } = {
-      type: 'success',
-      message: ''
-   };
+   alert: { type: FuseAlertType; message: string } = { type: 'warning', message: ''};
    signUpForm: UntypedFormGroup;
    showAlert: boolean = false;
 
@@ -31,11 +28,32 @@ export class AuthSignUpComponent implements OnInit {
 
    ngOnInit(): void {
       this.signUpForm = this._formBuilder.group({
-            name: ['', [Validators.required, Validators.minLength(3)]],
-            phone: ['', Validators.required],
-            password: ['', [Validators.required, Validators.minLength(6)]]
+            name: ['Alex Johnson', [Validators.required, Validators.minLength(3), Validators.maxLength(32)]],
+            phone: ['999639773', Validators.required],
+            password: ['Ogabek19991031', [Validators.required, Validators.minLength(6)]]
          }
       );
+   }
+
+   onNameEnter($event: Event): void {
+      const target = $event.target as HTMLInputElement;
+      let value: string = target.value;
+      let length: number = value.length;
+
+      if (length === 1) {
+         value = value.trim();
+      }
+
+      if (length > 1) {
+         const lastSymbol = value.charAt(length - 1);
+         const preLastSymbol = value.charAt(length - 2);
+
+         if (lastSymbol === ' ' && preLastSymbol === ' ') {
+            value = value.slice(0, length - 1);
+         }
+      }
+      this.signUpForm.get('name').patchValue(value);
+      this.signUpForm.get('name').updateValueAndValidity();
    }
 
    signUp(): void {
@@ -43,36 +61,24 @@ export class AuthSignUpComponent implements OnInit {
          return;
       }
 
-      // Disable the form
       this.signUpForm.disable();
 
-      // Hide the alert
       this.showAlert = false;
 
-      // Sign up
-      this._authService.signUp(this.signUpForm.value)
+      this._authService.signUp({
+         ...this.signUpForm.value,
+         phone: `+998${this.signUpForm.get('phone').value}`
+      })
          .subscribe(
-            (response) => {
-
-               // Navigate to the confirmation required page
-               this._router.navigateByUrl('/confirmation-required');
+            () => {
             },
-            (response) => {
-
-               // Re-enable the form
+            (error) => {
                this.signUpForm.enable();
 
-               // Reset the form
-               this.signUpNgForm.resetForm();
-
-               // Set the alert
-               this.alert = {
-                  type: 'error',
-                  message: 'Something went wrong, please try again.'
-               };
-
-               // Show the alert
-               this.showAlert = true;
+               if (error?.error?.errors?.includes('The phone number has been registered')) {
+                  this.alert.message = `Bu telefon raqam tizimda ro'yxatdan o'tgan`;
+                  this.showAlert = true;
+               }
             }
          );
    }

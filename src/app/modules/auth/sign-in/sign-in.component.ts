@@ -15,10 +15,7 @@ import { AuthService } from 'app/core/auth/auth.service';
 export class AuthSignInComponent implements OnInit {
    @ViewChild('signInNgForm') signInNgForm: NgForm;
 
-   alert: { type: FuseAlertType; message: string } = {
-      type: 'success',
-      message: ''
-   };
+   alert: { type: FuseAlertType; message: string } = { type: 'error', message: '' }
    signInForm: UntypedFormGroup;
    showAlert: boolean = false;
 
@@ -34,8 +31,8 @@ export class AuthSignInComponent implements OnInit {
 
    ngOnInit(): void {
       this.signInForm = this._formBuilder.group({
-            phone: ['', Validators.required],
-            password: ['', [Validators.required, Validators.minLength(6)]]
+            phone: ['999649773', Validators.required],
+            password: ['@Ogabek19991031', [Validators.required, Validators.minLength(6)]]
          }
       );
    }
@@ -44,36 +41,30 @@ export class AuthSignInComponent implements OnInit {
       if (this.signInForm.invalid) {
          return;
       }
-
-      // Disable the form
       this.signInForm.disable();
 
-      // Hide the alert
       this.showAlert = false;
 
-      // Sign up
-      this._authService.signUp(this.signInForm.value)
+      let { phone, password } = this.signInForm.value;
+      this._authService.signIn({
+         phone: `+998${ phone}`,
+         password
+      })
          .subscribe(
-            () => {
-
-               // Navigate to the confirmation required page
+            (res) => {
                this._router.navigateByUrl('/confirmation-required');
             },
-            () => {
-
-               // Re-enable the form
+            (error) => {
                this.signInForm.enable();
 
-               // Reset the form
-               this.signInNgForm.resetForm();
+               if (error?.error?.errors?.includes('User not found')) {
+                  this.alert.message = `Bu raqam tizimda ro'yxatdan o'tmagan`;
+               }
 
-               // Set the alert
-               this.alert = {
-                  type: 'error',
-                  message: 'Something went wrong, please try again.'
-               };
+               if (error?.error?.errors?.includes('Incorrect password')) {
+                  this.alert.message = `Parol noto'g'ri`;
+               }
 
-               // Show the alert
                this.showAlert = true;
             }
          );

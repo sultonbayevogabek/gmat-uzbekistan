@@ -28,10 +28,16 @@
                             id="name"
                             matInput
                             [formControlName]="'name'"
+                            (input)="onNameEnter($event)"
                     >
-                    <mat-error
-                            *ngIf="signUpForm.get('name').hasError('required') || signUpForm.get('name').hasError('minLength')">
+                    <mat-error *ngIf="signUpForm.get('name').hasError('required')">
                         Ismingizni kiriting
+                    </mat-error>
+                    <mat-error *ngIf="!signUpForm.get('name').hasError('required') && signUpForm.get('name').hasError('minlength')">
+                        Ism uzunligi eng kamida 3 ta bo'lishi kerak
+                    </mat-error>
+                    <mat-error *ngIf="!signUpForm.get('name').hasError('required') && signUpForm.get('name').hasError('maxlength')">
+                        Ism uzunligi 32 tadan ko'p bo'lmasligi kerak
                     </mat-error>
                 </mat-form-field>
 
@@ -40,9 +46,15 @@
                     <input
                             id="phone"
                             matInput
-                            [formControlName]="'phone'">
+                            [formControlName]="'phone'"
+                            [prefix]="'+998 '"
+                            mask="00-000-00-00"
+                    >
                     <mat-error *ngIf="signUpForm.get('phone').hasError('required')">
                         Telefon raqamingizni kiriting
+                    </mat-error>
+                    <mat-error *ngIf="!signUpForm.get('phone').hasError('required') && signUpForm.get('phone').hasError('mask')">
+                        Telefon raqam formati noto'g'ri
                     </mat-error>
                 </mat-form-field>
 
@@ -69,9 +81,11 @@
                                 *ngIf="passwordField.type === 'text'"
                                 [svgIcon]="'heroicons_solid:eye-off'"></mat-icon>
                     </button>
-                    <mat-error
-                            *ngIf="signUpForm.get('password').hasError('required') || signUpForm.get('password').hasError('minLength')">
+                    <mat-error *ngIf="signUpForm.get('password').hasError('required')">
                         Parolni kiriting
+                    </mat-error>
+                    <mat-error *ngIf="!signUpForm.get('password').hasError('required') && signUpForm.get('password').hasError('minlength')">
+                        Parol uzunligi eng kamida 6 ta bo'lishi kerak
                     </mat-error>
                 </mat-form-field>
 

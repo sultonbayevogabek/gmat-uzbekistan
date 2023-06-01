@@ -69,37 +69,37 @@ export class AuthForgotPasswordComponent implements OnInit
         this.showAlert = false;
 
         // Forgot password
-        this._authService.forgotPassword(this.forgotPasswordForm.get('email').value)
-            .pipe(
-                finalize(() => {
-
-                    // Re-enable the form
-                    this.forgotPasswordForm.enable();
-
-                    // Reset the form
-                    this.forgotPasswordNgForm.resetForm();
-
-                    // Show the alert
-                    this.showAlert = true;
-                })
-            )
-            .subscribe(
-                (response) => {
-
-                    // Set the alert
-                    this.alert = {
-                        type   : 'success',
-                        message: 'Password reset sent! You\'ll receive an email if you are registered on our system.'
-                    };
-                },
-                (response) => {
-
-                    // Set the alert
-                    this.alert = {
-                        type   : 'error',
-                        message: 'Email does not found! Are you sure you are already a member?'
-                    };
-                }
-            );
+        // this._authService.forgotPassword(this.forgotPasswordForm.get('email').value)
+        //     .pipe(
+        //         finalize(() => {
+        //
+        //             // Re-enable the form
+        //             this.forgotPasswordForm.enable();
+        //
+        //             // Reset the form
+        //             this.forgotPasswordNgForm.resetForm();
+        //
+        //             // Show the alert
+        //             this.showAlert = true;
+        //         })
+        //     )
+        //     .subscribe(
+        //         (response) => {
+        //
+        //             // Set the alert
+        //             this.alert = {
+        //                 type   : 'success',
+        //                 message: 'Password reset sent! You\'ll receive an email if you are registered on our system.'
+        //             };
+        //         },
+        //         (response) => {
+        //
+        //             // Set the alert
+        //             this.alert = {
+        //                 type   : 'error',
+        //                 message: 'Email does not found! Are you sure you are already a member?'
+        //             };
+        //         }
+        //     );
     }
 }
